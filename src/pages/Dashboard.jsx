@@ -21,6 +21,50 @@ const Dashboard = () => {
                     <Camera size={20} /> SCANNER UN BILLET
                 </button>
             </div>
+
+            {/* OVERLAY DU SCANNER */}
+            {isScanning && (
+                <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center p-6">
+                    <button onClick={() => setIsScanning(false)} className="absolute top-6 right-6 text-gray-400">
+                        <XCircle size={32} />
+                    </button>
+                    <h2 className="text-[#D4AF37] font-bold mb-6 italic">ALIGNER LE QR CODE</h2>
+                    <div id="reader" className="w-full max-w-sm rounded-3xl overflow-hidden border-2 border-[#D4AF37]"></div>
+                </div>
+            )}
+
+            {/* RÉSULTAT DU SCAN (MODAL) */}
+            {scanResult && (
+                <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-6">
+                    <div className={`w-full max-w-md p-8 rounded-3xl border-2 ${scanResult.status === 'VALID' ? 'border-green-500 bg-green-500/10' : 'border-red-500 bg-red-500/10'}`}>
+                        <div className="text-center">
+                            {scanResult.status === 'VALID' ? (
+                                <CheckCircle size={64} className="mx-auto text-green-500 mb-4" />
+                            ) : (
+                                <XCircle size={64} className="mx-auto text-red-500 mb-4" />
+                            )}
+
+                            <h2 className="text-3xl font-black mb-1">{scanResult.name}</h2>
+                            <p className="text-[#D4AF37] font-bold tracking-widest mb-6">{scanResult.type}</p>
+
+                            {scanResult.hasFood && (
+                                <div className="flex items-center justify-center gap-2 bg-white/10 p-4 rounded-xl mb-6">
+                                    <Utensils size={20} className="text-[#D4AF37]" />
+                                    <span className="font-bold">DONNER LE REPAS + 2 CONSO</span>
+                                </div>
+                            )}
+
+                            <button
+                                onClick={() => setScanResult(null)}
+                                className="w-full py-4 bg-white text-black font-black rounded-xl"
+                            >
+                                TICKET SUIVANT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <h1 className="text-4xl font-black mb-10 flex items-center gap-4">
                 STATS <span className="text-[#D4AF37]">90'S PARTY</span>
             </h1>
