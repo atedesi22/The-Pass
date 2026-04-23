@@ -1,6 +1,8 @@
 import React from 'react';
 import { Users, DollarSign, Activity, ArrowUpRight } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { Html5QrcodeScanner } from "html5-qrcode";
+import { Camera, XCircle, CheckCircle, Utensils } from 'lucide-react';
 
 const data = [
     { name: 'Pass Classic', total: 45 },
