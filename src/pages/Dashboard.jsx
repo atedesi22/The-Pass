@@ -10,6 +10,17 @@ const data = [
 const Dashboard = () => {
     return (
         <div className="p-8 text-white max-w-7xl mx-auto">
+            <div className="flex justify-between items-center mb-10">
+                <h1 className="text-3xl font-black italic">VINTAGE <span className="text-[#D4AF37]">70</span></h1>
+
+                {/* BOUTON ACTIVER SCANNER */}
+                <button
+                    onClick={() => { setIsScanning(true); setScanResult(null); }}
+                    className="bg-[#D4AF37] text-black px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:scale-105 transition"
+                >
+                    <Camera size={20} /> SCANNER UN BILLET
+                </button>
+            </div>
             <h1 className="text-4xl font-black mb-10 flex items-center gap-4">
                 STATS <span className="text-[#D4AF37]">90'S PARTY</span>
             </h1>
