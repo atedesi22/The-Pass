@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Users, DollarSign, Activity, ArrowUpRight } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Html5QrcodeScanner } from "html5-qrcode";
@@ -7,7 +7,11 @@ import { Camera, XCircle, CheckCircle, Utensils } from 'lucide-react';
 const data = [
     { name: 'Pass Classic', total: 45 },
     { name: 'Full Conso', total: 25 }
+
 ];
+
+const [isScanning, setIsScanning] = useState(false);
+const [scanResult, setScanResult] = useState(null);
 
 const Dashboard = () => {
     return (
