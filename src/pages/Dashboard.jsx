@@ -15,10 +15,56 @@ const data = [
 const Dashboard = () => {
     const [isScanning, setIsScanning] = useState(false);
     const [scanResult, setScanResult] = useState(null);
+
+    // --- CONFIGURATION DU USEEFFECT ICI ---
+    useEffect(() => {
+        let scanner = null;
+
+        if (isScanning) {
+            // On attend que le DOM soit prêt pour l'élément #reader
+            setTimeout(() => {
+                scanner = new Html5QrcodeScanner("reader", {
+                    fps: 10,
+                    qrbox: { width: 250, height: 250 },
+                    aspectRatio: 1.0,
+                    // Optionnel : force la caméra arrière sur mobile
+                    videoConstraints: { facingMode: "environment" }
+                });
+
+                scanner.render(
+                    (decodedText) => {
+                        // Action en cas de succès
+                        handleScanSuccess(decodedText);
+                        scanner.clear(); // Arrête la caméra
+                    },
+                    (error) => {
+                        // On ne met rien ici pour éviter de polluer la console
+                    }
+                );
+            }, 100); // Petit délai pour laisser React afficher la div #reader
+        }
+
+        // Nettoyage : s'exécute si on ferme le scanner ou si on quitte la page
+        return () => {
+            if (scanner) {
+                scanner.clear().catch(error => console.error("Erreur arrêt scanner", error));
+            }
+        };
+    }, [isScanning]); // Le scanner se relance dès que isScanning change
+    // ---------------------------------------
+
+    const handleScanSuccess = (data) => {
+        setIsScanning(false);
+        // Simuler une réponse backend pour le test
+        setScanResult({ name: "Invité 90s", status: "VALID" });
+        console.log("Code détecté :", data);
+    };
+
+
     return (
         <div className="p-8 text-white max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-10">
-                <h1 className="text-3xl font-black italic">VINTAGE <span className="text-[#D4AF37]">70</span></h1>
+                <h1 className="text-3xl font-black italic">VINTAGE <span className="text-[#D4AF37]">90'S PARTY</span></h1>
 
                 {/* BOUTON ACTIVER SCANNER */}
                 <button
