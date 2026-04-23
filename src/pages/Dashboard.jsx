@@ -10,10 +10,11 @@ const data = [
 
 ];
 
-const [isScanning, setIsScanning] = useState(false);
-const [scanResult, setScanResult] = useState(null);
+
 
 const Dashboard = () => {
+    const [isScanning, setIsScanning] = useState(false);
+    const [scanResult, setScanResult] = useState(null);
     return (
         <div className="p-8 text-white max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-10">
