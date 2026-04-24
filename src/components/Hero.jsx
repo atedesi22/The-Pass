@@ -22,7 +22,7 @@ const Hero = () => {
                     <h1 className="text-6xl md:text-[120px] font-black italic leading-none text-white tracking-tighter">
                         VINTAGE <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#D4AF37] drop-shadow-2xl">
-                            SEVENTY
+                            NINETY
                         </span>
                     </h1>
 

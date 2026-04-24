@@ -55,7 +55,7 @@ const App = () => {
       {/* HEADER / NAV MINIMALISTE */}
       <nav className="flex justify-between items-center p-6 absolute top-0 w-full z-50">
         <h2 className="text-xl font-black italic tracking-tighter">
-          VINTAGE <span className="text-[#D4AF37]">70</span>
+          VINTAGE <span className="text-[#D4AF37]">90</span>
         </h2>
         <button
           onClick={() => setView('dashboard')}
