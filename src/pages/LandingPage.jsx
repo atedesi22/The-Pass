@@ -6,6 +6,8 @@ import StoryGenerator from '../components/StoryGenerator';
 const LandingPage = () => {
     const [name, setName] = useState("");
     const [showStory, setShowStory] = useState(false);
+    const [selectedTicket, setSelectedTicket] = useState(null);
+    const [step, setStep] = useState('selection'); // selection, checkout, success
 
     return (
         <div className="text-white">
@@ -86,6 +88,35 @@ const LandingPage = () => {
                     {showStory && name.length > 2 && <StoryGenerator userName={name} ticketType="90s LEGEND" />}
                 </div>
             </section>
+
+            <div>
+                {step === 'selection' && (
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <TicketCard
+                            title="PASS CLASSIC"
+                            price="5000"
+                            onSelect={() => { setSelectedTicket({ title: 'PASS CLASSIC', price: 5000 }); setStep('checkout'); }}
+                        />
+                        {/* ... Idem pour Full Conso ... */}
+                    </div>
+                )}
+
+                {step === 'checkout' && (
+                    <TicketForm
+                        selectedTicket={selectedTicket}
+                        onPurchaseComplete={() => setStep('success')}
+                    />
+                )}
+
+                {step === 'success' && (
+                    <div className="text-center p-10 bg-green-500/10 border border-green-500/50 rounded-3xl">
+                        <CheckCircle2 size={64} className="mx-auto text-green-500 mb-4" />
+                        <h2 className="text-3xl font-black text-white mb-4 italic uppercase">C'est validé !</h2>
+                        <p className="text-gray-400 mb-8">Ton pass a été envoyé par WhatsApp. Prépare ton outfit !</p>
+                        <StoryGenerator userName={name} ticketType={selectedTicket.title} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
