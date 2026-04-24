@@ -38,13 +38,16 @@ const App = () => {
   if (view === 'dashboard') {
     return (
       <>
-        <Dashboard />
-        <button
-          onClick={() => setView('home')}
-          className="fixed bottom-4 left-4 z-50 bg-white/10 text-white px-4 py-2 rounded-full text-xs font-bold backdrop-blur-md border border-white/20"
-        >
-          RETOURNER AU SITE
-        </button>
+        <div className="bg-[#1A1A1A] min-h-screen text-white font-sans selection:bg-[#D4AF37] selection:text-black">
+
+          <Dashboard />
+          <button
+            onClick={() => setView('home')}
+            className="fixed bottom-4 left-4 z-50 bg-white/10 text-white px-4 py-2 rounded-full text-xs font-bold backdrop-blur-md border border-white/20"
+          >
+            RETOURNER AU SITE
+          </button>
+        </div>
       </>
     );
   }
