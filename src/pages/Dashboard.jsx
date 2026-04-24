@@ -62,7 +62,7 @@ const Dashboard = () => {
 
 
     return (
-        <div className="bg-[#1A1A1A] p-8 text-white max-w-7xl mx-auto">
+        <div className="p-8 text-white max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-10">
                 <h1 className="text-3xl font-black italic">VINTAGE <span className="text-[#D4AF37]">90'S PARTY</span></h1>
 
@@ -119,7 +119,7 @@ const Dashboard = () => {
             )}
 
             <h1 className="text-4xl font-black mb-10 flex items-center gap-4">
-                STATS <span className="text-[#D4AF37]">90'S PARTY</span>
+                STATS
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
