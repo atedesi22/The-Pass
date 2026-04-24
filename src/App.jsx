@@ -6,6 +6,8 @@ import StoryGenerator from './components/StoryGenerator';
 import Dashboard from './pages/Dashboard';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldAlert, ArrowLeft } from 'lucide-react';
+import FinalTicketGenerator from './components/FinalTicketGenerator';
+
 
 const App = () => {
   // Gestion de la navigation : 'home', 'dashboard'
@@ -69,39 +71,32 @@ const App = () => {
       </nav>
 
       <AnimatePresence mode="wait">
-        {step === 'selection' && (
+        {step === 'success' && (
           <motion.div
-            key="selection"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            key="success"
+          // ...
           >
-            <Hero />
+            <div className="bg-[#242424] p-10 rounded-[3rem] border border-green-500/30 max-w-2xl w-full">
+              <h2 className="text-5xl font-black text-white italic mb-4 uppercase">C'est bon !</h2>
+              <p className="text-gray-400 mb-8 text-lg">
+                Voici ton pass officiel <span className="text-[#D4AF37] font-bold">{selectedTicket?.title}</span>.
+                <span className="block text-white font-semibold">Télécharge-le et présente-le à l'entrée.</span>
+              </p>
 
-            {/* SECTION BILLETS */}
-            <section id="tickets" className="py-20 px-6 max-w-6xl mx-auto">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-black italic mb-4 uppercase">Prends ta place</h2>
-                <div className="h-1 w-20 bg-[#D4AF37] mx-auto"></div>
+              {/* LE NOUVEAU GÉNÉRATEUR DE TICKET AVEC FOND ET NOM */}
+              <FinalTicketGenerator
+                userName={userName || "INVITÉ MYSTÈRE"} // Récupère le nom du formulaire
+                ticketType={selectedTicket?.title}
+                ticketId={`V70-${Math.floor(1000 + Math.random() * 9000)}`} // Simulation d'ID
+              />
+
+              <div className="mt-16 pt-10 border-t border-gray-800">
+                <p className="text-sm text-gray-500 mb-6">Tu veux aussi ta Story personnalisée pour WhatsApp ?</p>
+                <StoryGenerator userName={userName || "INVITÉ VIP"} ticketType={selectedTicket?.title} />
               </div>
 
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                {tickets.map((t) => (
-                  <div key={t.id} onClick={() => { setSelectedTicket(t); setStep('checkout'); }}>
-                    <TicketCard {...t} />
-                  </div>
-                ))}
-              </div>
-
-              {/* RAPPEL OUTFIT */}
-              <div className="mt-20 border-2 border-dashed border-red-600/30 p-8 rounded-[2rem] bg-red-600/5 flex flex-col md:flex-row items-center gap-6">
-                <ShieldAlert size={48} className="text-red-600 shrink-0" />
-                <div>
-                  <h4 className="text-xl font-bold text-white uppercase italic">Alerte Dress Code</h4>
-                  <p className="text-gray-400 text-sm">
-                    Le thème des années 90 est obligatoire. En cas de non-respect, une amende de <span className="text-white font-bold">2 000 FCFA</span> sera perçue à l'entrée. Tout le monde doit jouer le jeu !
-                  </p>
-                </div>
-              </div>
-            </section>
+              {/* ... bouton retour ... */}
+            </div>
           </motion.div>
         )}
 
