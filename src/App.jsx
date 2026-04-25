@@ -2,152 +2,149 @@ import React, { useState } from 'react';
 import Hero from './components/Hero';
 import TicketCard from './components/TicketCard';
 import TicketForm from './components/TicketForm';
+import FinalTicketGenerator from './components/FinalTicketGenerator';
 import StoryGenerator from './components/StoryGenerator';
 import Dashboard from './pages/Dashboard';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldAlert, ArrowLeft } from 'lucide-react';
-import FinalTicketGenerator from './components/FinalTicketGenerator';
-
 
 const App = () => {
-  // Gestion de la navigation : 'home', 'dashboard'
-  const [view, setView] = useState('home');
+  // Navigation principale
+  const [view, setView] = useState('home'); // 'home' ou 'dashboard'
+  const [step, setStep] = useState('selection'); // 'selection', 'checkout', 'success'
 
-  // Gestion du tunnel d'achat : 'selection', 'checkout', 'success'
-  const [step, setStep] = useState('selection');
+  // Données partagées
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [userName, setUserName] = useState("");
 
-  // Données des tickets (basées sur tes instructions)
   const tickets = [
     {
       id: 'classic',
       title: 'PASS CLASSIC',
       price: '5000',
-      features: ['Entrée + 1 Boisson offerte', 'Accès aux concours (Twerk, Blind Test)', 'QR Code immédiat'],
+      features: ['Entrée + 1 Boisson offerte', 'Accès concours 90s', 'QR Code immédiat'],
       isPremium: false
     },
     {
       id: 'full',
       title: 'FULL CONSO',
       price: '8000',
-      features: ['Entrée + 2 Boissons + Repas', 'Place assise réservée', 'Accès Cash Prize VIP'],
+      features: ['Entrée + 2 Boissons + Repas', 'Place assise réservée', 'Accès VIP'],
       isPremium: true
     }
   ];
 
-  // Si on est sur le Dashboard (Vue Organisateur)
+  // Rendu du Dashboard (Staff)
   if (view === 'dashboard') {
     return (
-      <>
-        <div className="bg-[#1A1A1A] min-h-screen text-white font-sans selection:bg-[#D4AF37] selection:text-black">
-
-          <Dashboard />
-          <button
-            onClick={() => setView('home')}
-            className="fixed bottom-4 left-4 z-50 bg-white/10 text-white px-4 py-2 rounded-full text-xs font-bold backdrop-blur-md border border-white/20"
-          >
-            RETOURNER AU SITE
-          </button>
-        </div>
-      </>
+      <div className="bg-[#1A1A1A] min-h-screen text-white">
+        <Dashboard />
+        <button
+          onClick={() => setView('home')}
+          className="fixed bottom-6 left-6 bg-[#D4AF37] text-black px-6 py-2 rounded-full font-bold shadow-lg z-50"
+        >
+          QUITTER LE DASHBOARD
+        </button>
+      </div>
     );
   }
 
+  // Rendu de la Landing Page (Public)
   return (
-    <div className="bg-[#1A1A1A] min-h-screen text-white font-sans selection:bg-[#D4AF37] selection:text-black">
+    <div className="bg-[#1A1A1A] min-h-screen text-white font-sans">
 
-      {/* HEADER / NAV MINIMALISTE */}
-      <nav className="flex justify-between items-center p-6 absolute top-0 w-full z-50">
-        <h2 className="text-xl font-black italic tracking-tighter">
-          VINTAGE <span className="text-[#D4AF37]">90</span>
+      {/* HEADER FIXE */}
+      <nav className="flex justify-between items-center p-6 border-b border-white/5 bg-[#1A1A1A]/80 backdrop-blur-md sticky top-0 z-40">
+        <h2 className="text-xl font-black italic tracking-tighter cursor-pointer" onClick={() => setStep('selection')}>
+          VINTAGE <span className="text-[#D4AF37]">70</span>
         </h2>
         <button
           onClick={() => setView('dashboard')}
-          className="text-[10px] uppercase tracking-widest text-gray-500 hover:text-[#D4AF37] transition"
+          className="text-[10px] uppercase tracking-widest text-gray-500 hover:text-[#D4AF37] transition font-bold"
         >
-          Accès Staff
+          Staff Only
         </button>
       </nav>
 
-      <AnimatePresence mode="wait">
-        {step === 'success' && (
-          <motion.div
-            key="success"
-          // ...
-          >
-            <div className="bg-[#242424] p-10 rounded-[3rem] border border-green-500/30 max-w-2xl w-full">
-              <h2 className="text-5xl font-black text-white italic mb-4 uppercase">C'est bon !</h2>
-              <p className="text-gray-400 mb-8 text-lg">
-                Voici ton pass officiel <span className="text-[#D4AF37] font-bold">{selectedTicket?.title}</span>.
-                <span className="block text-white font-semibold">Télécharge-le et présente-le à l'entrée.</span>
-              </p>
-
-              {/* LE NOUVEAU GÉNÉRATEUR DE TICKET AVEC FOND ET NOM */}
-              <FinalTicketGenerator
-                userName={userName || "INVITÉ MYSTÈRE"} // Récupère le nom du formulaire
-                ticketType={selectedTicket?.title}
-                ticketId={`V70-${Math.floor(1000 + Math.random() * 9000)}`} // Simulation d'ID
-              />
-
-              <div className="mt-16 pt-10 border-t border-gray-800">
-                <p className="text-sm text-gray-500 mb-6">Tu veux aussi ta Story personnalisée pour WhatsApp ?</p>
-                <StoryGenerator userName={userName || "INVITÉ VIP"} ticketType={selectedTicket?.title} />
+      <main>
+        {/* ÉTAPE 1 : ACCUEIL ET SÉLECTION */}
+        {step === 'selection' && (
+          <div>
+            <Hero />
+            <section className="py-20 px-6 max-w-6xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl font-black italic mb-2 uppercase">Réserve ton Pass</h2>
+                <p className="text-gray-500 text-sm">Édition limitée à 70 personnes</p>
               </div>
 
-              {/* ... bouton retour ... */}
-            </div>
-          </motion.div>
+              <div className="grid md:grid-cols-2 gap-8 mb-16">
+                {tickets.map((t) => (
+                  <div key={t.id} onClick={() => { setSelectedTicket(t); setStep('checkout'); }}>
+                    <TicketCard {...t} />
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-2 border-dashed border-red-600/30 p-8 rounded-[2rem] bg-red-600/5 flex items-center gap-6">
+                <ShieldAlert size={40} className="text-red-600 shrink-0" />
+                <p className="text-gray-400 text-sm">
+                  <span className="text-white font-bold block uppercase mb-1">Règle de l'Outfit :</span>
+                  Tenue 90s obligatoire. Amende de <span className="text-white font-bold">2 000 FCFA</span> si le dress code n'est pas respecté.
+                </p>
+              </div>
+            </section>
+          </div>
         )}
 
-        {step === 'checkout' && (
-          <motion.div
-            key="checkout"
-            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
-            className="min-h-screen flex flex-col items-center justify-center p-6"
-          >
+        {/* ÉTAPE 2 : PAIEMENT (CHECKOUT) */}
+        {step === 'checkout' && selectedTicket && (
+          <div className="min-h-[80vh] flex flex-col items-center justify-center p-6">
             <button
               onClick={() => setStep('selection')}
-              className="mb-8 flex items-center gap-2 text-gray-500 hover:text-white transition"
+              className="mb-8 flex items-center gap-2 text-gray-500 hover:text-[#D4AF37] transition"
             >
-              <ArrowLeft size={18} /> Retour aux billets
+              <ArrowLeft size={18} /> Retour au choix du pass
             </button>
             <TicketForm
               selectedTicket={selectedTicket}
-              onPurchaseComplete={(name) => { setUserName(name); setStep('success'); }}
+              onPurchaseComplete={(name) => {
+                setUserName(name);
+                setStep('success');
+              }}
             />
-          </motion.div>
+          </div>
         )}
 
-        {step === 'success' && (
-          <motion.div
-            key="success"
-            initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-            className="min-h-screen flex flex-col items-center justify-center p-6 text-center"
-          >
-            <div className="bg-[#242424] p-10 rounded-[3rem] border border-green-500/30 max-w-2xl w-full">
-              <h2 className="text-5xl font-black text-white italic mb-4 uppercase">Félicitations !</h2>
-              <p className="text-gray-400 mb-8 text-lg">
-                Ton pass <span className="text-[#D4AF37] font-bold">{selectedTicket?.title}</span> est réservé.
-                Télécharge ta story et partage-la sur WhatsApp pour valider ton entrée !
-              </p>
+        {/* ÉTAPE 3 : SUCCÈS ET TÉLÉCHARGEMENT */}
+        {step === 'success' && selectedTicket && (
+          <div className="min-h-[80vh] flex flex-col items-center justify-center p-6 text-center">
+            <div className="bg-[#242424] p-8 md:p-12 rounded-[3rem] border border-[#D4AF37]/30 max-w-2xl w-full shadow-2xl">
+              <h2 className="text-4xl font-black text-white italic mb-2">PASS CONFIRMÉ !</h2>
+              <p className="text-gray-400 mb-8">Télécharge ton ticket officiel ci-dessous.</p>
 
-              <StoryGenerator userName={userName || "INVITÉ VIP"} ticketType={selectedTicket?.title} />
+              <FinalTicketGenerator
+                userName={userName || "INVITÉ VIP"}
+                ticketType={selectedTicket.title}
+                ticketId={`V70-${Math.floor(1000 + Math.random() * 9000)}`}
+              />
+
+              <div className="mt-12 pt-8 border-t border-gray-800">
+                <p className="text-xs text-gray-500 mb-6 uppercase tracking-widest">Partage ta présence</p>
+                <StoryGenerator userName={userName} ticketType={selectedTicket.title} />
+              </div>
 
               <button
-                onClick={() => setStep('selection')}
-                className="mt-12 text-sm text-gray-600 underline hover:text-[#D4AF37]"
+                onClick={() => { setStep('selection'); setSelectedTicket(null); }}
+                className="mt-10 text-sm text-gray-600 hover:text-[#D4AF37] underline"
               >
-                Prendre un autre billet
+                Prendre une autre place
               </button>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      </main>
 
-      {/* FOOTER */}
-      <footer className="py-10 text-center text-gray-600 text-[10px] tracking-[0.3em] uppercase">
-        © 2026 Vintage 70 — Powered by NovaVerse
+      <footer className="py-12 text-center text-gray-700 text-[10px] tracking-[0.4em] uppercase">
+        VINTAGE 70 • Douala 2026 • NovaVerse Ecosystem
       </footer>
     </div>
   );

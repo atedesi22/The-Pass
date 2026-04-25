@@ -25,7 +25,9 @@ const StoryGenerator = ({ userName, ticketType }) => {
         // User Name
         ctx.fillStyle = '#D4AF37';
         ctx.font = 'italic bold 130px Impact';
-        ctx.fillText(userName.toUpperCase(), 540, 960);
+        const displayName = (userName || "INVITÉ").toUpperCase();
+        ctx.fillText(displayName, 540, 960);
+        // ctx.fillText(userName.toUpperCase(), 540, 960);
         // Footer
         ctx.font = '40px Arial';
         ctx.fillText(`ID TICKET: #${Math.floor(Math.random() * 1000)}`, 540, 1600);
