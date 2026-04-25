@@ -55,7 +55,7 @@ const App = () => {
       {/* HEADER FIXE */}
       <nav className="flex justify-between items-center p-6 border-b border-white/5 bg-[#1A1A1A]/80 backdrop-blur-md sticky top-0 z-40">
         <h2 className="text-xl font-black italic tracking-tighter cursor-pointer" onClick={() => setStep('selection')}>
-          VINTAGE <span className="text-[#D4AF37]">70</span>
+          VINTAGE <span className="text-[#D4AF37]">90</span>
         </h2>
         <button
           onClick={() => setView('dashboard')}
@@ -144,7 +144,7 @@ const App = () => {
       </main>
 
       <footer className="py-12 text-center text-gray-700 text-[10px] tracking-[0.4em] uppercase">
-        VINTAGE 70 • Douala 2026 • NovaVerse Ecosystem
+        VINTAGE 90 • Douala 2026 • NovaVerse Ecosystem
       </footer>
     </div>
   );

@@ -42,7 +42,7 @@ const FinalTicketGenerator = ({ userName, ticketType, ticketId }) => {
                     // En-tête
                     ctx.fillStyle = '#D4AF37';
                     ctx.font = 'bold 30px Arial';
-                    ctx.fillText('VINTAGE 70 • OFFICIAL PASS', canvas.width / 2, 80);
+                    ctx.fillText('VINTAGE 90 • OFFICIAL PASS', canvas.width / 2, 80);
 
                     // Nom de l'acheteur
                     ctx.fillStyle = '#FFFFFF';
