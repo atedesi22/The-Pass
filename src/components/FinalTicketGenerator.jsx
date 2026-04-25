@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import QRCode from 'qrcode'; // npm install qrcode
+import { Html5QrcodeScanner } from "html5-qrcode";
 import { Download, Share2 } from 'lucide-react';
 
 const FinalTicketGenerator = ({ userName, ticketType, ticketId }) => {
