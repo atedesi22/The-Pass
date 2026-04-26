@@ -8,7 +8,7 @@ const FinalTicketGenerator = ({ userName, ticketType, ticketId }) => {
     const [isGenerating, setIsGenerating] = useState(true);
 
     // Image de fond stylée (Néons/Retro)
-    const backgroundUrl = "flyer.JPG";
+    const backgroundUrl = "flyer.jpeg";
 
     useEffect(() => {
         const generateTicket = async () => {
